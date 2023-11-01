@@ -5,11 +5,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Calculadora;
+import model.Retangulo;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ButtonGroup;
 
 public class Janela2 extends JFrame {
 
@@ -17,6 +25,7 @@ public class Janela2 extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtPrimeiroN;
 	private JTextField txtSegundoN;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -39,60 +48,111 @@ public class Janela2 extends JFrame {
 	 */
 	public Janela2() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 304, 231);
+		setBounds(100, 100, 360, 231);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JLabel lblPrimeiroN = new JLabel("Primeiro número inteiro:");
+		JLabel lblPrimeiroN = new JLabel("Primeiro número:");
 		lblPrimeiroN.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPrimeiroN.setBounds(10, 11, 144, 14);
 		contentPane.add(lblPrimeiroN);
 		
+		JLabel label = new JLabel("");
+		contentPane.add(label);
+		
 		txtPrimeiroN = new JTextField();
-		txtPrimeiroN.setBounds(156, 8, 117, 20);
 		contentPane.add(txtPrimeiroN);
 		txtPrimeiroN.setColumns(10);
 		
-		JLabel lblSegundoN = new JLabel("Segundo número inteiro:");
+		JLabel lblSegundoN = new JLabel("Segundo número:");
 		lblSegundoN.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblSegundoN.setBounds(10, 33, 139, 14);
 		contentPane.add(lblSegundoN);
 		
+		JLabel label_1 = new JLabel("");
+		contentPane.add(label_1);
+		
 		txtSegundoN = new JTextField();
-		txtSegundoN.setBounds(156, 30, 117, 20);
 		contentPane.add(txtSegundoN);
 		txtSegundoN.setColumns(10);
 		
 		JRadioButton rdbtnAdicao = new JRadioButton("+ Adição");
+		buttonGroup.add(rdbtnAdicao);
 		rdbtnAdicao.setFont(new Font("Tahoma", Font.BOLD, 11));
-		rdbtnAdicao.setBounds(6, 54, 109, 23);
 		contentPane.add(rdbtnAdicao);
 		
+		JLabel label_2 = new JLabel("");
+		contentPane.add(label_2);
+		
+		JLabel label_3 = new JLabel("");
+		contentPane.add(label_3);
+		
 		JRadioButton rdbtnSubtracao = new JRadioButton("- Subtração");
+		buttonGroup.add(rdbtnSubtracao);
 		rdbtnSubtracao.setFont(new Font("Tahoma", Font.BOLD, 11));
-		rdbtnSubtracao.setBounds(6, 80, 109, 23);
 		contentPane.add(rdbtnSubtracao);
 		
+		JLabel label_4 = new JLabel("");
+		contentPane.add(label_4);
+		
+		JLabel label_5 = new JLabel("");
+		contentPane.add(label_5);
+		
 		JRadioButton rdbtnMultiplicacao = new JRadioButton("x Multiplicação");
+		buttonGroup.add(rdbtnMultiplicacao);
 		rdbtnMultiplicacao.setFont(new Font("Tahoma", Font.BOLD, 11));
-		rdbtnMultiplicacao.setBounds(6, 106, 109, 23);
 		contentPane.add(rdbtnMultiplicacao);
 		
+		JLabel label_6 = new JLabel("");
+		contentPane.add(label_6);
+		
+		JLabel label_7 = new JLabel("");
+		contentPane.add(label_7);
+		
 		JRadioButton rdbtnDivisao = new JRadioButton("/ Divisão");
+		buttonGroup.add(rdbtnDivisao);
 		rdbtnDivisao.setFont(new Font("Tahoma", Font.BOLD, 11));
-		rdbtnDivisao.setBounds(6, 132, 109, 23);
 		contentPane.add(rdbtnDivisao);
 		
-		JButton btnCalcular = new JButton("CALCULAR");
-		btnCalcular.setBounds(61, 162, 89, 23);
-		contentPane.add(btnCalcular);
+		JLabel label_8 = new JLabel("");
+		contentPane.add(label_8);
+		
+		JLabel label_9 = new JLabel("");
+		contentPane.add(label_9);
 		
 		JLabel lblResposta = new JLabel("");
-		lblResposta.setBounds(160, 166, 80, 14);
 		contentPane.add(lblResposta);
-	}
+		
+		JButton btnCalcular = new JButton("CALCULAR");
+		btnCalcular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int primeiro = Integer.valueOf(txtPrimeiroN.getText());
+				int segundo = Integer.valueOf(txtSegundoN.getText());
+				Calculadora calculo = new Calculadora();
+				int adicao = calculo.calcAdicao(primeiro, segundo);
+				int subtracao = calculo.calcSubtracao(primeiro, segundo);
+				int multiplicacao = calculo.calcMultiplicacao(primeiro, segundo);
+				int divisao = calculo.calcDivisao(primeiro, segundo);
+				if(rdbtnAdicao.isSelected()) {
+					lblResposta.setText("Resultado:"+adicao);
+			    }
+				else if(rdbtnSubtracao.isSelected()) {
+					lblResposta.setText("Resultado:"+subtracao);
+				}
+				else if(rdbtnMultiplicacao.isSelected()) {
+					lblResposta.setText("Resultado:"+multiplicacao);
+				}
+				else if(rdbtnDivisao.isSelected()) {
+					lblResposta.setText("Resultado:"+divisao);
+				}
 
+
+			}
+		});
+		contentPane.add(btnCalcular);
+		
+		
+		
+	}
 }
