@@ -133,7 +133,7 @@ public class Janela2 extends JFrame {
 				int adicao = calculo.calcAdicao(primeiro, segundo);
 				int subtracao = calculo.calcSubtracao(primeiro, segundo);
 				int multiplicacao = calculo.calcMultiplicacao(primeiro, segundo);
-				int divisao = calculo.calcDivisao(primeiro, segundo);
+				float divisao = calculo.calcDivisao(primeiro, segundo);
 				if(rdbtnAdicao.isSelected()) {
 					lblResposta.setText("Resultado:"+adicao);
 			    }

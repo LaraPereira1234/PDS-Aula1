@@ -17,8 +17,8 @@ public class Calculadora {
 		return multiplicacao;
 	}
 	
-	public int calcDivisao(int primeiro, int segundo) {
-		int divisao = primeiro - segundo;
+	public float calcDivisao(float primeiro, float segundo) {
+		float divisao = primeiro - segundo;
 		return divisao;
 	}
 }
