@@ -3,6 +3,7 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -18,6 +19,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ButtonGroup;
 
 public class PostoCombustivel extends JFrame {
 
@@ -33,6 +35,7 @@ public class PostoCombustivel extends JFrame {
 	private JTextField txtQuantidade2;
 	private JTextField txtQuantAbas;
 	private JTextField txtDias;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -191,7 +194,7 @@ public class PostoCombustivel extends JFrame {
 		panel_3.add(lblCombustivel, "cell 0 0,alignx left,aligny center");
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Oleo Diesel"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Oleo Diesel", "Gas. Comum", "Gas. Aditivada", "Etanol"}));
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		comboBox.setToolTipText("");
 		panel_3.add(comboBox, "cell 2 0 3 1,alignx left,aligny top");
@@ -218,9 +221,11 @@ public class PostoCombustivel extends JFrame {
 		
 		
 		JRadioButton rdbtnVista = new JRadioButton("À vista");
+		buttonGroup.add(rdbtnVista);
 		panel_4.add(rdbtnVista, "cell 0 0,alignx left,aligny top");
 		
 		JRadioButton rdbtnPrazo = new JRadioButton("À prazo");
+		buttonGroup.add(rdbtnPrazo);
 		panel_4.add(rdbtnPrazo, "cell 0 2,alignx left,aligny top");
 		
 		JLabel lblDias = new JLabel("Dias:");
@@ -245,6 +250,20 @@ public class PostoCombustivel extends JFrame {
 		contentPane.add(btnCalcular);
 		
 		JButton btnCalculo = new JButton("Novo Calculo");
+		btnCalculo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtOleoDiesel.setText("");
+				 txtGasComum.setText("");
+				 txtGasAditivada.setText("");
+				 txtEtanol.setText("");
+				 txtPreco500.setText("");
+				 txtPreco1L.setText("");
+				 txtQuantidade500.setText("");
+				 txtQuantidade2.setText("");
+				 txtQuantAbas.setText("");
+				 txtDias.setText("");
+			}
+		});
 		btnCalculo.setBounds(189, 404, 110, 23);
 		contentPane.add(btnCalculo);
 		
@@ -257,4 +276,5 @@ public class PostoCombustivel extends JFrame {
 		btnFechar.setBounds(350, 404, 89, 23);
 		contentPane.add(btnFechar);
 	}
+
 }
