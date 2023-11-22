@@ -3,10 +3,12 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import model.Calculos;
+
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
@@ -19,7 +21,8 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.ButtonGroup;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class PostoCombustivel extends JFrame {
 
@@ -35,7 +38,6 @@ public class PostoCombustivel extends JFrame {
 	private JTextField txtQuantidade2;
 	private JTextField txtQuantAbas;
 	private JTextField txtDias;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -57,6 +59,8 @@ public class PostoCombustivel extends JFrame {
 	 * Create the frame.
 	 */
 	public PostoCombustivel() {
+		Calculos c = new Calculos();
+		setTitle("Posto de Combustível");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 513, 477);
 		contentPane = new JPanel();
@@ -78,6 +82,12 @@ public class PostoCombustivel extends JFrame {
 		panel.add(lblOleoDiesel, "cell 0 0,alignx left,aligny center");
 		
 		txtOleoDiesel = new JTextField();
+		txtOleoDiesel.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.vDiesel = Float.valueOf(txtOleoDiesel.getText());
+			}
+		});
 		panel.add(txtOleoDiesel, "cell 4 0 5 1,alignx left,aligny top");
 		txtOleoDiesel.setColumns(10);
 		
@@ -91,6 +101,12 @@ public class PostoCombustivel extends JFrame {
 		panel.add(lblNewLabel, "cell 0 1,alignx left,aligny center");
 		
 		txtGasComum = new JTextField();
+		txtGasComum.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.vComum = Float.valueOf(txtGasComum.getText());
+			}
+		});
 		panel.add(txtGasComum, "cell 4 1 5 1,alignx left,aligny top");
 		txtGasComum.setColumns(10);
 		
@@ -104,6 +120,12 @@ public class PostoCombustivel extends JFrame {
 		panel.add(label_3, "cell 8 1,alignx left,aligny center");
 		
 		txtGasAditivada = new JTextField();
+		txtGasAditivada.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.vAditiva = Float.valueOf(txtGasAditivada.getText());
+			}
+		});
 		panel.add(txtGasAditivada, "cell 4 2 5 1,alignx left,aligny top");
 		txtGasAditivada.setColumns(10);
 		
@@ -117,6 +139,12 @@ public class PostoCombustivel extends JFrame {
 		panel.add(label_5, "cell 3 2,alignx left,aligny center");
 		
 		txtEtanol = new JTextField();
+		txtEtanol.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.vEtanol = Float.valueOf(txtEtanol.getText());
+			}
+		});
 		panel.add(txtEtanol, "cell 4 3 5 1,alignx left,aligny top");
 		txtEtanol.setColumns(10);
 		
@@ -134,6 +162,13 @@ public class PostoCombustivel extends JFrame {
 		panel_1.add(lblPrecoFrascoMotor, "cell 0 0,alignx left,aligny center");
 		
 		txtPreco500 = new JTextField();
+		txtPreco500.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.v500ml = Float.valueOf(txtPreco500.getText());
+			}
+		});
+		txtPreco500.setText("");
 		panel_1.add(txtPreco500, "cell 1 0,alignx left,aligny top");
 		txtPreco500.setColumns(10);
 		
@@ -141,6 +176,12 @@ public class PostoCombustivel extends JFrame {
 		panel_1.add(lblPrecoFrasco1L, "cell 0 1,alignx left,aligny center");
 		
 		txtPreco1L = new JTextField();
+		txtPreco1L.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.v1L = Float.valueOf(txtPreco1L.getText());
+			}
+		});
 		panel_1.add(txtPreco1L, "cell 1 1,alignx left,aligny top");
 		txtPreco1L.setColumns(10);
 		
@@ -163,25 +204,49 @@ public class PostoCombustivel extends JFrame {
 		JLabel lblOleoMotor500 = new JLabel("Frasco de 500ml");
 		panel_2.add(lblOleoMotor500, "cell 0 1,alignx left,aligny center");
 		
-		txtQuantidade500 = new JTextField();
-		panel_2.add(txtQuantidade500, "cell 1 1,alignx left,aligny center");
-		txtQuantidade500.setColumns(10);
-		
 		JLabel lblValor500 = new JLabel("");
 		panel_2.add(lblValor500, "cell 3 1,grow");
 		
 		JLabel lblTotal2 = new JLabel("");
 		panel_2.add(lblTotal2, "cell 5 1,grow");
 		
+		txtQuantidade500 = new JTextField();
+		txtQuantidade500.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.q500ml = Float.valueOf(txtQuantidade500.getText());
+				lblValor500.setText("R$ "+ c.c500ml());
+			    lblTotal2.setText("R$ "+ c.totalOleo());
+			}
+		});
+		panel_2.add(txtQuantidade500, "cell 1 1,alignx left,aligny center");
+		txtQuantidade500.setColumns(10);
+		
+		panel_2.add(lblValor500);
+		
+		panel_2.add(lblTotal2);
+	
+		
 		JLabel lblOleoMotor1 = new JLabel("Frasco de 1L");
 		panel_2.add(lblOleoMotor1, "cell 0 2,alignx left,aligny center");
 		
+		JLabel lblValor1L = new JLabel("");
+		panel_2.add(lblValor1L, "cell 3 2,grow");
+		
 		txtQuantidade2 = new JTextField();
+		txtQuantidade2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				c.q1L = Float.valueOf(txtQuantidade2.getText());
+				lblValor1L.setText("R$ "+ c.c1L());
+				lblTotal2.setText("R$ "+ c.totalOleo());
+			}
+		});
 		panel_2.add(txtQuantidade2, "cell 1 2,alignx left,aligny top");
 		txtQuantidade2.setColumns(10);
 		
-		JLabel lblValor1L = new JLabel("");
-		panel_2.add(lblValor1L, "cell 3 2,grow");
+		panel_2.add(lblValor1L);
+		
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Abastecimento", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -194,23 +259,46 @@ public class PostoCombustivel extends JFrame {
 		panel_3.add(lblCombustivel, "cell 0 0,alignx left,aligny center");
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Oleo Diesel", "Gas. Comum", "Gas. Aditivada", "Etanol"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {}));
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		comboBox.setToolTipText("");
 		panel_3.add(comboBox, "cell 2 0 3 1,alignx left,aligny top");
 		
 		JLabel lblQuantidadeAbas = new JLabel("Quantidade de Litros:");
 		panel_3.add(lblQuantidadeAbas, "cell 0 1,alignx left,aligny center");
 		
+		JLabel lblTotalComb2 = new JLabel("");
+		panel_3.add(lblTotalComb2, "cell 4 2,grow");
+		
 		txtQuantAbas = new JTextField();
+		txtQuantAbas.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				int posicao = comboBox.getSelectedIndex();
+				float qLitros = Float.valueOf(txtQuantAbas.getText());
+				if(posicao == 0)
+				{
+					lblTotalComb2.setText("R$ "+ c.Diesel(qLitros));
+				}
+				else if(posicao == 1)
+				{
+					lblTotalComb2.setText("R$ "+ c.Comum(qLitros));
+				}
+				else if(posicao == 2)
+				{
+					lblTotalComb2.setText("R$ "+ c.Aditiva(qLitros));
+				}
+				else if(posicao == 3)
+				{
+					lblTotalComb2.setText("R$ "+ c.Etanol(qLitros));
+				}
+			}
+		});
 		panel_3.add(txtQuantAbas, "cell 2 1 3 1,alignx left,aligny top");
 		txtQuantAbas.setColumns(10);
 		
 		JLabel lblTotalComb = new JLabel("Total Combustivel:");
 		panel_3.add(lblTotalComb, "cell 0 2 3 1,alignx right,aligny bottom");
 		
-		JLabel lblTotalComb2 = new JLabel("");
-		panel_3.add(lblTotalComb2, "cell 4 2,grow");
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Formas de Pagamento", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -221,11 +309,9 @@ public class PostoCombustivel extends JFrame {
 		
 		
 		JRadioButton rdbtnVista = new JRadioButton("À vista");
-		buttonGroup.add(rdbtnVista);
 		panel_4.add(rdbtnVista, "cell 0 0,alignx left,aligny top");
 		
 		JRadioButton rdbtnPrazo = new JRadioButton("À prazo");
-		buttonGroup.add(rdbtnPrazo);
 		panel_4.add(rdbtnPrazo, "cell 0 2,alignx left,aligny top");
 		
 		JLabel lblDias = new JLabel("Dias:");
@@ -244,6 +330,25 @@ public class PostoCombustivel extends JFrame {
 		JButton btnCalcular = new JButton("Calcular");
 		btnCalcular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(rdbtnVista.isSelected()) 
+				{
+					String total = c.TotalPagarVista();
+					lblTotalPagar.setText("R$ "+total);
+				}
+				else if(rdbtnPrazo.isSelected())
+				{
+					Integer dias = Integer.valueOf(txtDias.getText());
+					if(dias <= 30)
+					{
+						String total = c.totalPagarPrazo();
+						lblTotalPagar.setText("R$ "+total);
+					}
+					else if(dias > 30)
+					{
+						String total = c.totalPagarPrazo30();
+						lblTotalPagar.setText("R$ "+total);
+					}
+				}
 			}
 		});
 		btnCalcular.setBounds(40, 404, 89, 23);
@@ -252,16 +357,21 @@ public class PostoCombustivel extends JFrame {
 		JButton btnCalculo = new JButton("Novo Calculo");
 		btnCalculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtOleoDiesel.setText("");
-				 txtGasComum.setText("");
-				 txtGasAditivada.setText("");
-				 txtEtanol.setText("");
-				 txtPreco500.setText("");
-				 txtPreco1L.setText("");
-				 txtQuantidade500.setText("");
-				 txtQuantidade2.setText("");
-				 txtQuantAbas.setText("");
-				 txtDias.setText("");
+				txtOleoDiesel.setText(null);
+			    txtGasComum.setText(null);
+				txtGasAditivada.setText(null);
+				txtEtanol.setText(null);
+				txtPreco500.setText(null);
+				txtPreco1L.setText(null);
+				txtQuantidade500.setText(null);
+				txtQuantidade2.setText(null);
+				txtQuantAbas.setText(null);
+				txtDias.setText(null);
+				lblValor500.setText("-");
+				lblValor1L.setText("-");
+				lblTotalComb2.setText("-");
+				lblTotalPagar.setText(null);
+				lblTotal2.setText("-");
 			}
 		});
 		btnCalculo.setBounds(189, 404, 110, 23);
@@ -276,5 +386,4 @@ public class PostoCombustivel extends JFrame {
 		btnFechar.setBounds(350, 404, 89, 23);
 		contentPane.add(btnFechar);
 	}
-
 }
