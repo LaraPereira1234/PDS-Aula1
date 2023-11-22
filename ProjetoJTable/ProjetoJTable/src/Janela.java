@@ -72,8 +72,13 @@ public class Janela extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				int linha = table.getSelectedRow();
-				Pessoa pessoaSelecionada = listaPessoas.get(linha);
-				JOptionPane.showMessageDialog(null, "Pessoa Selecionada: " + pessoaSelecionada.getNome());
+				Pessoa pS = listaPessoas.get(linha);
+				txtNome.setText(pS.getNome());
+				txtCPF.setText(String.valueOf(pS.getCpf()));
+				txtTelefone.setText(String.valueOf(pS.getTelefone()));
+				txtIdade.setText(String.valueOf(pS.getIdade()));
+				txtAltura.setText(String.valueOf(pS.getAltura()));
+				txtPeso.setText(String.valueOf(pS.getPeso()));
 			}
 		});
 		atualizarJTableModel();
@@ -101,19 +106,19 @@ public class Janela extends JFrame {
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nome = txtNome.getText();
-			    Integer cpf = Integer.valueOf(txtCPF.getText());
-				Integer telefone = Integer.valueOf(txtTelefone.getText());
-				Integer idade = Integer.valueOf(txtIdade.getText());
-				Float peso = Float.valueOf(txtPeso.getText());
-				Float altura = Float.valueOf(txtAltura.getText());
+			    String cpf = txtCPF.getText();
+			    String telefone = txtTelefone.getText();
+			    String idade = txtIdade.getText();
+			    String peso = txtPeso.getText();
+			    String altura = txtAltura.getText();
 
 				Pessoa p = new Pessoa();
 				p.setNome(nome);
-				p.setCpf(cpf);
-				p.setTelefone(telefone);
-				p.setIdade(idade);
-				p.setPeso(peso);
-				p.setAltura(altura);
+				p.setCpf(Integer.parseInt(cpf));
+				p.setTelefone(Integer.parseInt(telefone));
+				p.setIdade(Integer.parseInt(idade));
+				p.setPeso(Float.parseFloat(peso));
+				p.setAltura(Float.parseFloat(altura));
 
 				listaPessoas.add(p);
 
@@ -128,45 +133,41 @@ public class Janela extends JFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int linhaparaexc = table.getSelectedRow();
-
-				int cpf = (int) table.getValueAt(linhaparaexc, 1);
-
-				for (Pessoa pessoa : listaPessoas) {
-					if (pessoa.getCpf() == cpf) {
-						listaPessoas.remove(pessoa);
-					}
-				}
-
+				int idx_linha = table.getSelectedRow();
+				listaPessoas.remove(idx_linha);
 				atualizarJTableModel();
+				limparCampos();
 			}
-		});
+			});
 		btnExcluir.setBounds(190, 191, 89, 23);
 		contentPane.add(btnExcluir);
 
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int linhaparaexc = table.getSelectedRow();
-
-				int cpf = (int) table.getValueAt(linhaparaexc, 1);
-
-				for (Pessoa pessoa : listaPessoas) {
-					if (pessoa.getCpf() == cpf) {
+				
 						 // pegar os valores digitados nos campos de textotxtNome.setText("");
-						txtNome.setText("");
-						txtCPF.setText("");
-						txtTelefone.setText("");
-						txtIdade.setText("");
-						txtPeso.setText("");
-						txtAltura.setText("");
+						Pessoa p = listaPessoas.get(table.getSelectedRow());
+						String nome = txtNome.getText();
+						String cpf= txtCPF.getText();
+						String telefone = txtTelefone.getText();
+						String idade = txtIdade.getText();
+						String peso = txtPeso.getText();
+						String altura = txtAltura.getText();
 						
 						// setar no obj do arraylist
+						p.setNome(nome);
+						p.setCpf(Integer.parseInt(cpf));
+						p.setTelefone(Integer.parseInt(telefone));
+						p.setIdade(Integer.parseInt(idade));
+						p.setPeso(Float.parseFloat(peso));
+						p.setAltura(Float.parseFloat(altura));
+						
+						atualizarJTableModel();
+						limparCampos();
 					}
-				}
-
-				atualizarJTableModel();
-			}
+				
+			
 		});
 		btnAlterar.setBounds(318, 191, 89, 23);
 		contentPane.add(btnAlterar);

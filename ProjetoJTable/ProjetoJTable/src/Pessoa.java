@@ -7,8 +7,7 @@ public class Pessoa {
 	private int idade;
 	private float peso;
 	private float altura;
-	
-	
+		
 	public int getTelefone() {
 		return telefone;
 	}
