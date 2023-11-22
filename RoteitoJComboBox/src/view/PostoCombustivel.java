@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import model.Calculos;
+import model.ComboBox;
 
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
@@ -23,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.ButtonGroup;
 
 public class PostoCombustivel extends JFrame {
 
@@ -38,6 +40,7 @@ public class PostoCombustivel extends JFrame {
 	private JTextField txtQuantidade2;
 	private JTextField txtQuantAbas;
 	private JTextField txtDias;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -258,10 +261,14 @@ public class PostoCombustivel extends JFrame {
 		JLabel lblCombustivel = new JLabel("Combustivel:");
 		panel_3.add(lblCombustivel, "cell 0 0,alignx left,aligny center");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {}));
+		JComboBox<ComboBox> comboBox = new JComboBox<ComboBox>();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_3.add(comboBox, "cell 2 0 3 1,alignx left,aligny top");
+		comboBox.setToolTipText("");
+		comboBox.addItem(ComboBox.Diesel);
+		comboBox.addItem(ComboBox.Comum);
+		comboBox.addItem(ComboBox.Aditivada);
+		comboBox.addItem(ComboBox.Etanol);
 		
 		JLabel lblQuantidadeAbas = new JLabel("Quantidade de Litros:");
 		panel_3.add(lblQuantidadeAbas, "cell 0 1,alignx left,aligny center");
@@ -309,9 +316,11 @@ public class PostoCombustivel extends JFrame {
 		
 		
 		JRadioButton rdbtnVista = new JRadioButton("À vista");
+		buttonGroup.add(rdbtnVista);
 		panel_4.add(rdbtnVista, "cell 0 0,alignx left,aligny top");
 		
 		JRadioButton rdbtnPrazo = new JRadioButton("À prazo");
+		buttonGroup.add(rdbtnPrazo);
 		panel_4.add(rdbtnPrazo, "cell 0 2,alignx left,aligny top");
 		
 		JLabel lblDias = new JLabel("Dias:");
